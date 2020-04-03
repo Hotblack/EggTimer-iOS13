@@ -1,20 +1,8 @@
-//
-//  ViewController.swift
-//  EggTimer
-//
-//  Created by Angela Yu on 08/07/2019.
-//  Copyright © 2019 The App Brewery. All rights reserved.
-//
-
 import UIKit
 import AVFoundation
 
 class ViewController: UIViewController {
     
-//    //constants for the different timers
-//    let softTime = 5
-//    let medTime = 8
-//    let hardTime = 12
     
     //dictionary; "key" : "value"
     let eggTimes = ["Soft": 3, "Medium": 5, "Hard": 7]
@@ -42,7 +30,7 @@ class ViewController: UIViewController {
 
     @IBAction func hardnessSelected(_ sender: UIButton) {
         
-        //begin classwork - inefficient if/else statement
+        //inefficient if/else statement
         
        //let hardness = sender.currentTitle!
         
@@ -62,7 +50,9 @@ class ViewController: UIViewController {
    //     print("The ", sender.titleLabel!.text!, " button was pressed" )
         
         
-        //end classwork
+        //end if/else
+        
+        
 
         //this will change from "done" when the timer elapses
         //this is the default String value
@@ -98,17 +88,23 @@ class ViewController: UIViewController {
     // must be internal or public.
        @objc func timerAction() {
            
+        //if the totalTime is greater than zero (if the timer is still counting down) then display time elapsed and decrement totalTime
         if (totalTime > 0){
             
+            //since totalTime is a FLOAT and the UILabel requires a String, we must CAST the totalTime variable to a String.
             self.titleLabel.text = String(totalTime)
-            //self.titleLabel.text = hardness
+            //decrementing totalTime by 1 every time this function runs (the Timer initializer above activates this function every 1 sec
             totalTime = totalTime - 1
         }
         
+        //if timer reaches zero, then display a message on screen, play the alarm sound, and reset the timer
         else{
-         
+            //change the UILabel to "DONE"
             self.titleLabel.text = "DONE!"
+            //play sound
             playSound(label: "alarm_sound")
+            //reset (ie invalidate) the timer to default starting values
+            timer.invalidate()
             
         }
         }
